@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="St.John的个人技术博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://sunjunior.cn">
+    <!--SEO-->
+
+<meta name="keywords" content="编程思想" />
+
+
+<meta name="description" content="函数式编程的几点思考关于抽象 我们已经知道，过程就是一类抽象，它们描述了对于数的复合操作,比如，在定义：
+
+1(define (cube x) (* x x x)
+
+我们讨论的并不是某个特定数值..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    函数式编程的几点思考 |
+    
+    St.John的个人技术博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="St.John的个人技术博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    /./img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='St.John'>
+            <img src="/img/avatar.png" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">技术控，爱折腾</h2>-->
+            
+            <h2>
+                技术控，爱折腾
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://sunjunior.cn">
+                        St.John的个人技术博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/algorithms"><i class="fa "></i>
+                                数据结构与算法</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives"><i class="fa "></i>
+                                归档</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/about"><i class="fa "></i>
+                                关于</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="函数式编程的几点思考">
+            
+            函数式编程的几点思考
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/%E7%BC%96%E7%A8%8B%E6%80%9D%E6%83%B3/" rel="tag">编程思想</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2020/05/03</span>
+    </span>
+    
+    
+</div>
+        
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <h3 id="函数式编程的几点思考"><a href="#函数式编程的几点思考" class="headerlink" title="函数式编程的几点思考"></a>函数式编程的几点思考</h3><h3 id="关于抽象"><a href="#关于抽象" class="headerlink" title="关于抽象"></a>关于抽象</h3><p> 我们已经知道，过程就是一类抽象，它们描述了对于数的复合操作,比如，在定义：
+
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">cube</span> x) (<span class="name"><span class="builtin-name">*</span></span> x x x)</span><br></pre></td></tr></table></figure>
+
+<p>我们讨论的并不是某个特定数值的立方，而是对任意的数得到其立方的方法，当然，我们也完全可以不去定义这一过程，而是列出详细的表达步骤：</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">*</span></span> x x x)</span><br><span class="line">(<span class="name"><span class="builtin-name">*</span></span> y y y )</span><br></pre></td></tr></table></figure>
+<p>这里如果不把cube抽象出来，当存在大量的复杂运算时，我们就会把自己给绕晕了，理论上，把所有计算过程详细地列出来，也能很好的工作，但不能表述<strong><em>立方</em></strong>这一概念。我们对这些公共模块建立抽象之后，就可以直接在更高层次上工作。实际上，所有高级语言提供的的函数机制，其就提供了这种能力。如果只将过程（函数）作为输入参数，那么会限制我们建立抽象的能力。实际上，作为高级抽象语言，我们可以将任何数据都作为过程来看待，也就是说，过程的输出可以当做另外一个过程的输入，同时也可以将过程本身作为过程的参数，或者以过程作为返回值，这类能操作过程的过程称为高阶过程。</p>
+<h3 id="过程-函数-作为参数"><a href="#过程-函数-作为参数" class="headerlink" title="过程(函数)作为参数"></a>过程(函数)作为参数</h3><p>下面用Lisp语言描述其步骤，最后给出如何用C语言书写等价代码，C语言需要通过回调机制来抽象求和步骤。</p>
+<p> 考虑下面三个过程，第一个计算从a到b的各个整数之和：
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">sum-integers</span> a b)</span><br><span class="line">  (<span class="name"><span class="builtin-name">if</span></span> (<span class="name"><span class="builtin-name">&gt;</span></span> a b)</span><br><span class="line">	  <span class="number">0</span></span><br><span class="line">	  (<span class="name"><span class="builtin-name">+</span></span> a (<span class="name">sum-integers</span> (<span class="name"><span class="builtin-name">+</span></span> a <span class="number">1</span>) b))))</span><br></pre></td></tr></table></figure>
+
+<p>第二个计算给定范围内的整数的立方之和：</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">sum-cubes</span> a b)</span><br><span class="line">  (<span class="name"><span class="builtin-name">if</span></span> (<span class="name"><span class="builtin-name">&gt;</span></span> a b)</span><br><span class="line">      <span class="number">0</span> </span><br><span class="line">      (<span class="name"><span class="builtin-name">+</span></span> (<span class="name">cube</span> a) (<span class="name">sum-cubes</span> (<span class="name"><span class="builtin-name">+</span></span> a <span class="number">1</span>) b))))</span><br></pre></td></tr></table></figure>
+
+<p>第三个计算下面的序列之和：</p>
+<p>$$<br>\frac {1} {1 \cdot 3} +\frac {1} {5 \cdot 7} + \frac {1} {9 \cdot 11} +\cdots<br>$$<br>它将收敛于$ \frac {\pi} {8}$：</p>
+<figure class="highlight scheme"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(<span class="name"><span class="builtin-name">define</span></span> (<span class="name">pi-sum</span> a b)</span><br><span class="line">  (<span class="name"><span class="builtin-name">if</span></span> (<span class="name"><span class="builtin-name">&gt;</span></span> a b)</span><br><span class="line">      <span class="number">0</span></span><br><span class="line">      (<span class="name"><span class="builtin-name">+</span></span> (<span class="name"><span class="builtin-name">/</span></span> <span class="number">1.0</span> (<span class="name"><span class="builtin-name">*</span></span> a (<span class="name"><span class="builtin-name">+</span></span> a <span class="number">2</span>))) (<span class="name">pi-sum</span> (<span class="name"><span class="builtin-name">+</span></span> a <span class="number">4</span>) b))))</span><br></pre></td></tr></table></figure>
+<p>可以看出，这三个过程共享一种公共的模式。它们很大一部分是共同的，只在所用的过程名字上不一样：用于从a算出需要加的项的函数。我们可以通过填充下面模板中的各空位，产生出上面的各个过程：
+
+<pre>
+(define (&lt;name> a b)
+  (if (> a b)
+      0
+      (+ (&lt;term> a)
+         (&lt;name> (&lt;next> a) b))))
+</pre>
+
+<p>数学家很早就认识到序列求和中的抽象模式，并提出了专门的“求和记法”，例如：</p>
+<p>$$\sum_{n=a}^{b}f(n) = f(a) + \cdots + f(b) $$</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 ©
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+    <a href="/2020/05/03/gtest/" class="next-post btn btn-default" title='简单用GTest单元测试框架编写测试用例'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            简单用GTest单元测试框架编写测试用例</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'zh-CN'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#函数式编程的几点思考"><span class="toc-text">函数式编程的几点思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于抽象"><span class="toc-text">关于抽象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过程-函数-作为参数"><span class="toc-text">过程(函数)作为参数</span></a></li></ol>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright©2017-2020 ALL RIGHTS RESERVED.
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="St.John的个人技术博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://sunjunior.cn">
+    <!--SEO-->
+
+<meta name="keywords" content="VPN科学上网" />
+
+
+<meta name="description" content="本人作为一名IT工作者，对于了解国内外先进的黑科技是有必要的。由于谷歌在搜索体验上吊打百度，因此利用谷歌来获取额外的信息是非常有值得的。可是，国内谷歌被墙，需要上外网必须通过VPN，因此找一款合..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    利用shadowsocks上外网 |
+    
+    St.John的个人技术博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="St.John的个人技术博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <header class="main-header"  style="background-image:url(
+    /./img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='St.John'>
+            <img src="/img/avatar.png" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">技术控，爱折腾</h2>-->
+            
+            <h2>
+                技术控，爱折腾
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://sunjunior.cn">
+                        St.John的个人技术博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/algorithms"><i class="fa "></i>
+                                数据结构与算法</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives"><i class="fa "></i>
+                                归档</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/about"><i class="fa "></i>
+                                关于</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="利用shadowsocks上外网">
+            
+            利用shadowsocks上外网
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/VPN%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/" rel="tag">VPN科学上网</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2019/03/21</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                409</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>本人作为一名IT工作者，对于了解国内外先进的黑科技是有必要的。由于谷歌在搜索体验上吊打百度，因此利用谷歌来获取额外的信息是非常有值得的。可是，国内谷歌被墙，需要上外网必须通过VPN，因此找一款合适的VPN也需要在市场上各类VPN中找到靠谱的那一款。</p>
+<p>这里我们找到了一款比较靠谱的VPN软件，这是一款Google chrome插件，叫Ghelper，在网上搜索该款插件之后，安装chrome插件，就可以用chrome浏览器上网了。如果没有付费，一般也能上谷歌搜索和谷歌邮箱，其他的网站就屏蔽了，比如Facebook，Twitter，YouTube等等。按照插件付费步骤付费（一个月也就16元人民币，不贵，一顿饭钱而已）之后，就可以享受科学上网的便利了。这里简单地看下Ghelper界面配置情况，如下图所示</p>
+<p><img src="http://sunjunior.cn/img/vpn/vpn1.png" alt="Ghelper设置界面"></p>
+<p><img src="http://sunjunior.cn/img/vpn/vpn2.png" alt="手机设备选项"></p>
+<p>其实，只需要我们购买付费服务之后，就可以顺畅地上类似youtube视频网站了：</p>
+<p><img src="http://sunjunior.cn/img/vpn/vpn5.gif" alt="Youtube网站"></p>
+<p>此外，我们需要在手机设备一栏中，新增服务，加密方式一般选择aes-256-cfb方式即可。这样新增的服务中会出现VPN所有信息，包括主机地址，服务器端口，加密方式及密钥。</p>
+<p><img src="http://sunjunior.cn/img/vpn/vpn3.png" alt="手机设备新增服务"></p>
+<p>这里我创建了3个服务地址，方便手机软件轮流使用，防止某一线路不通导致无法上网：</p>
+<p><img src="http://sunjunior.cn/img/vpn/vpn4.png" alt="手机上网配置"></p>
+<p>打开手机安装的shadowsocks软件，右上角有个加号按钮，点击之后，如下图所示，这里我们既可以用二维码扫描方式配置（就是上图中模糊的二维码），也可以手动配置，效果是一样的，这样我们用手动设置：</p>
+<p><img src="http://sunjunior.cn/img/vpn/vpn6.jpg" alt="shadowsocks配置"></p>
+<p>进入手动设置配置界面，将Ghelper中手机设置中的某一个服务配置信息拿过来，进行一一对应填写上，确认就可以科学上网了：</p>
+<p><img src="http://sunjunior.cn/img/vpn/vpn7.jpg" alt="shadowsocks配置"></p>
+<p><img src="http://sunjunior.cn/img/vpn/vpn8.jpg" alt="shadowsocks配置"></p>
+<p>这样我们就可以顺利在手机上上网了，每次使用需要VPN连接的软件时，我们首先需要进入到shadowsocks软件下，点击连接后，状态显示已经连接，退出来之后，就可以愉快地上Google 地图，Youtube，twiiter等客户端。</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 ©
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2019/03/31/cartest/" class="pre-post btn btn-default" title='深圳清湖科目三路考3号线细节'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            深圳清湖科目三路考3号线细节</span>
+    </a>
+    
+    
+    <a href="/2018/10/07/arch-repair/" class="next-post btn btn-default" title='archlinux升级系统之后无法启动问题'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            archlinux升级系统之后无法启动问题</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+<div id="comments">
+    
+
+<div id="vcomments" class="valine"></div>
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+<script>
+new Valine({
+    av: AV,
+    el: '#vcomments',
+    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+    placeholder: '说点什么吧',
+    notify: false,
+    verify: true,
+    avatar: 'mm',
+    meta: 'nick,mail'.split(','),
+    pageSize: '10',
+    path: window.location.pathname,
+    lang: 'zh-CN'.toLowerCase()
+})
+</script>
+
+
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright©2017-2020 ALL RIGHTS RESERVED.
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+</body>
+</html>
