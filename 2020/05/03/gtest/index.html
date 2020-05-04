@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 
 <head>
-    <!--Setting-->
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--Setting-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -63,7 +63,7 @@
 
     
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <!--[if lte IE 8]>
 <style>
     html{ font-size: 1em }
@@ -73,7 +73,7 @@
 <div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
 <![endif]-->
 <body>
-    <header class="main-header"  style="background-image:url(
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="main-header"  style="background-image:url(
     /./img/banner.jpg)"
      >
     <div class="main-header-box">
@@ -174,43 +174,45 @@
     </div>
     
     <div class="post-body post-content">
-        <h1 id="GTest单元测试框架浅析"><a href="#GTest单元测试框架浅析" class="headerlink" title="GTest单元测试框架浅析"></a>GTest单元测试框架浅析</h1><p>Google发布的gtest是一款跨平台单元测试框架，本文是在archlinux上直接安装gtest之后，用codeblocks编写了一个简单的16进制字符串转数字的函数，最后利用gtest测试框架来输出测试用例，保证函数的正确性。在使用gtest时，需要在IDE编译选项中添加-lgtest选项，不然可能会链接报错。下面是简单的用法和执行结果：<br>    #include &lt;gtest/gtest.h&gt;</p>
-<pre><code>bool String2Word(const char *ptr, unsigned int *puiValue)
+        <h1 id="GTest单元测试框架浅析"><a href="#GTest单元测试框架浅析" class="headerlink" title="GTest单元测试框架浅析"></a>GTest单元测试框架浅析</h1><p>Google发布的gtest是一款跨平台单元测试框架，本文是在archlinux上直接安装gtest之后，用codeblocks编写了一个简单的16进制字符串转数字的函数，最后利用gtest测试框架来输出测试用例，保证函数的正确性。在使用gtest时，需要在IDE编译选项中添加-lgtest选项，不然可能会链接报错。下面是简单的用法和执行结果：</p>
+<pre><code>#include &lt;gtest/gtest.h&gt;
+
+bool String2Word(const char *ptr, unsigned int *puiValue)
 {
     int pos = 0;
     char aPos[8];
     unsigned int uiValue = 0;
 
-    if (ptr == nullptr || *ptr == &apos;\0&apos; || puiValue == NULL)
+    if (ptr == nullptr || *ptr == &#39;\0&#39; || puiValue == NULL)
     {
         return false;
     }
 
     //这里比如“14e23”和“0x14e23”都是一样的数字
 
-    if (ptr[0] == &apos;0&apos; &amp;&amp; (ptr[1] == &apos;x&apos; || ptr[1] == &apos;X&apos;))
+    if (ptr[0] == &#39;0&#39; &amp;&amp; (ptr[1] == &#39;x&#39; || ptr[1] == &#39;X&#39;))
     {
         ptr += 2;
     }
 
-    while (*ptr != &apos;\0&apos;)
+    while (*ptr != &#39;\0&#39;)
     {
         if (pos &gt;= 8)
         {
             return false;
         }
 
-        if (*ptr &gt;= &apos;0&apos; &amp;&amp; *ptr &lt;= &apos;9&apos;)
+        if (*ptr &gt;= &#39;0&#39; &amp;&amp; *ptr &lt;= &#39;9&#39;)
         {
-            aPos[pos++] = *ptr - &apos;0&apos;;
+            aPos[pos++] = *ptr - &#39;0&#39;;
         }
-        else if (*ptr &gt;= &apos;a&apos; &amp;&amp; *ptr &lt;= &apos;f&apos;)
+        else if (*ptr &gt;= &#39;a&#39; &amp;&amp; *ptr &lt;= &#39;f&#39;)
         {
-            aPos[pos++] = *ptr - &apos;a&apos; + 10;
+            aPos[pos++] = *ptr - &#39;a&#39; + 10;
         }
-        else if (*ptr &gt;= &apos;A&apos; &amp;&amp; *ptr &lt;= &apos;F&apos;)
+        else if (*ptr &gt;= &#39;A&#39; &amp;&amp; *ptr &lt;= &#39;F&#39;)
         {
-            aPos[pos++] = *ptr - &apos;A&apos; + 10;
+            aPos[pos++] = *ptr - &#39;A&#39; + 10;
         }
         else
         {
@@ -308,28 +310,50 @@ int main(int argc, char *argv[])
     return RUN_ALL_TESTS();
 
 
-}</code></pre><p><img src="http://sunjunior.cn/img/gtest.gif" alt="gtest打桩测试结果显示"><br>总之，单元测试是软件开发中最要的一个环节，利用gtest可以方便测试我们自己编写的程序，写出程序少bug，其他gtest用法可以参考gtest附带的example，里面基本将常见的单元测试用法列举齐全了。最后附上程序猿的佛祖保佑图：</p>
+}
+</code></pre><p><img src="/img/gtest.gif" alt="gtest打桩测试结果显示"><br>总之，单元测试是软件开发中最要的一个环节，利用gtest可以方便测试我们自己编写的程序，写出程序少bug，其他gtest用法可以参考gtest附带的example，里面基本将常见的单元测试用法列举齐全了。最后附上程序猿的佛祖保佑图：</p>
 <pre><code>                   _ooOoo_
                   o8888888o
                   88&quot; . &quot;88
                   (| -_- |)
                   O\  =  /O
-               ____/`---&apos;\____
-             .&apos;  \\|     |//  `.
+               ____/`---&#39;\____
+             .&#39;  \\|     |//  `.
             /  \\|||  :  |||//  \
            /  _||||| -:- |||||-  \
            |   | \\\  -  /// |   |
-           | \_|  &apos;&apos;\---/&apos;&apos;  |   |
+           | \_|  &#39;&#39;\---/&#39;&#39;  |   |
            \  .-\__  `-`  ___/-. /
-         ___`. .&apos;  /--.--\  `. . __
-      .&quot;&quot; &apos;&lt;  `.___\_&lt;|&gt;_/___.&apos;  &gt;&apos;&quot;&quot;.
+         ___`. .&#39;  /--.--\  `. . __
+      .&quot;&quot; &#39;&lt;  `.___\_&lt;|&gt;_/___.&#39;  &gt;&#39;&quot;&quot;.
      | | :  `- \`.;`\ _ /`;.`/ - ` : | |
      \  \ `-.   \_ __\ /__ _/   .-` /  /
-======`-.____`-.___\_____/___.-`____.-&apos;======
-                   `=---=&apos;
+======`-.____`-.___\_____/___.-`____.-&#39;======
+                   `=---=&#39;
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-         佛祖保佑       永无BUG</code></pre>
+         佛祖保佑       永无BUG
+</code></pre>
     </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wepay.png"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏就是我更新的动力
+    </p>
+</div>
     
     <div class="post-footer">
         <div>
@@ -346,12 +370,6 @@ int main(int argc, char *argv[])
 </article>
 <div class="article-nav prev-next-wrap clearfix">
     
-    <a href="/2020/05/03/Function/" class="pre-post btn btn-default" title='函数式编程的几点思考'>
-        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-        <span class="hidden-xs">
-            函数式编程的几点思考</span>
-    </a>
-    
     
     <a href="/2019/03/31/cartest/" class="next-post btn btn-default" title='深圳清湖科目三路考3号线细节'>
         <span class="hidden-lg">下一篇</span>
@@ -359,34 +377,6 @@ int main(int argc, char *argv[])
             深圳清湖科目三路考3号线细节</span><i class="fa fa-angle-right fa-fw"></i>
     </a>
     
-</div>
-
-<div id="comments">
-    
-
-<div id="vcomments" class="valine"></div>
-
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="/assets/valine.min.js"></script>
-
-<script>
-new Valine({
-    av: AV,
-    el: '#vcomments',
-    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
-    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
-    placeholder: '说点什么吧',
-    notify: false,
-    verify: true,
-    avatar: 'mm',
-    meta: 'nick,mail'.split(','),
-    pageSize: '10',
-    path: window.location.pathname,
-    lang: 'zh-CN'.toLowerCase()
-})
-</script>
-
-
 </div>
 
                 </main>
@@ -435,5 +425,20 @@ new Valine({
 
 <script src="/js/app.js?rev=@@hash.js"></script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

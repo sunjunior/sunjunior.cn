@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 
 <head>
-    <!--Setting-->
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--Setting-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -63,7 +63,7 @@
 
     
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <!--[if lte IE 8]>
 <style>
     html{ font-size: 1em }
@@ -73,7 +73,7 @@
 <div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
 <![endif]-->
 <body>
-    <header class="main-header"  style="background-image:url(
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="main-header"  style="background-image:url(
     /./img/banner.jpg)"
      >
     <div class="main-header-box">
@@ -181,21 +181,38 @@
     
     <div class="post-body post-content">
         <p>本人用的Linux系统版本是archlinux系统，这几年来一直用命令 pacman -Syu滚动升级到最新版本，还没有出现滚挂的问题。这两天用命令全量升级之后，重新电脑，发现系统开启不了了，但是在恢复模式下能启动进入系统界面。如果在正常模式下启动，会提示无法找到UUID：</p>
-<p><img src="http://sunjunior.cn/img/fault/archboot1.jpg" alt="启动异常提示"></p>
+<p><img src="/img/fault/archboot1.jpg" alt="启动异常提示"></p>
 <p>我在恢复模式下进入系统之后，查看是否我的fstab配置问题，经过确认之后，确认配置没有啥问题。</p>
-<p><img src="http://sunjunior.cn/img/fault/archboot2.jpg" alt="配置异常检测"></p>
+<p><img src="/img/fault/archboot2.jpg" alt="配置异常检测"></p>
 <p>经过几番折腾和网上搜索解决方案，在Stack Exchange上找到了一篇帖子<a href="https://superuser.com/questions/769047/unable-to-find-root-device-on-a-fresh-archlinux-install" target="_blank" rel="noopener">“Unable to find root device” on a fresh ArchLinux install</a>，很好的解决了这个问题。文中说道，Linux由于默认镜像文件中缺少block mkinitcpio hook（负责块设备），Linux启动时无法检测到任何驱动器（比如/dev/sda1,/dev/sdb1等等）。因为在配置文件/etc/mkinitcpio.conf中，block放到了autodetect之后，只需要调换一下位置，重新打包内核就可以了。</p>
 <p>修改之前的配置：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)</span><br></pre></td></tr></table></figure>
-
 <p>修改之后的配置：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HOOKS=(base udev block autodetect modconf filesystems keyboard fsck)</span><br></pre></td></tr></table></figure>
-
 <p>配置OK之后，重新执行下面命令产生initramfs，永久地修复了该问题。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkinitcpio -p linux</span><br></pre></td></tr></table></figure>
 
-
     </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wepay.png"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏就是我更新的动力
+    </p>
+</div>
     
     <div class="post-footer">
         <div>
@@ -225,34 +242,6 @@
             安卓手机如何变成一台便携式Linux主机</span><i class="fa fa-angle-right fa-fw"></i>
     </a>
     
-</div>
-
-<div id="comments">
-    
-
-<div id="vcomments" class="valine"></div>
-
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="/assets/valine.min.js"></script>
-
-<script>
-new Valine({
-    av: AV,
-    el: '#vcomments',
-    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
-    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
-    placeholder: '说点什么吧',
-    notify: false,
-    verify: true,
-    avatar: 'mm',
-    meta: 'nick,mail'.split(','),
-    pageSize: '10',
-    path: window.location.pathname,
-    lang: 'zh-CN'.toLowerCase()
-})
-</script>
-
-
 </div>
 
                 </main>
@@ -301,5 +290,20 @@ new Valine({
 
 <script src="/js/app.js?rev=@@hash.js"></script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

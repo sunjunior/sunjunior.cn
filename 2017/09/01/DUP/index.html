@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 
 <head>
-    <!--Setting-->
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--Setting-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -65,7 +65,7 @@ int dup2(i..." />
 
     
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <!--[if lte IE 8]>
 <style>
     html{ font-size: 1em }
@@ -75,7 +75,7 @@ int dup2(i..." />
 <div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
 <![endif]-->
 <body>
-    <header class="main-header"  style="background-image:url(
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="main-header"  style="background-image:url(
     /./img/banner.jpg)"
      >
     <div class="main-header-box">
@@ -175,7 +175,7 @@ int dup2(i..." />
         
         <p class="fa fa-exclamation-triangle warning">
             本文于<strong>
-                975</strong>
+                976</strong>
             天之前发表，文中内容可能已经过时。
         </p>
         
@@ -184,9 +184,8 @@ int dup2(i..." />
     <div class="post-body post-content">
         <p>dup函数是用来复制一个现有的文件描述符，UNIX-LIKE系统下提供了2个这样函数，原型如下(由unistd.h头文件提供)：</p>
 <pre><code>int dup(int filedes);
-int dup2(int filedes, int filedes2);</code></pre><p>
-根据APUE书中所讲，dup返回的新文件描述符是可用文件描述符中的最小数值，而dup2可用用filedes2参数指定新描述符的数值。如果filedes2已经打开，则将其关闭。这些函数返回的新文件描述符与被复制的filedes共享同一个文件表项，具体可以查看APUE文档说明。在实际应用项目中，主要是用于标准输出重定向。比如项目中有许多标准输出调试函数（默认启动一个进程时，操作系统默认分配了文件描述符0,1,2给该进程）。有时候需要将这些调试函数输出信息写入到文本文件中去，如何能一次复用现有调试函数而不是推倒重写，那最简单的就是将这些标准输出信息重定向到指定的文本文件中。那就需要用到这2个函数了。    需要注意的是，用这两个函数重定向标准输出时，一定是配合起来用的。由于dup2使用时会关闭filedes2，这里一般指的是标准输出（文件描述符为STDOUT_FILENO，值为1）。需要先用dup函数将其文件描述符保存起来，便于后面重新恢复打印到标准输出中来。另外还有一点就是，如果原有项目中用的是带I/O缓冲函数，即C语言标准库函数，如fprintf, fread,fwrite,printf等等，需要及时用fflush函数刷新到磁盘文件中去，不然很可能还会显示到标准输出中。实际项目中可以用2个函数封装好之后，注入到现有函数的最前面和结尾，一个函数用于将标准输出重定向到文件，另一个函数用于恢复标准输出。下面是演示代码：
-
+int dup2(int filedes, int filedes2);
+</code></pre><p><p><br>根据APUE书中所讲，dup返回的新文件描述符是可用文件描述符中的最小数值，而dup2可用用filedes2参数指定新描述符的数值。如果filedes2已经打开，则将其关闭。这些函数返回的新文件描述符与被复制的filedes共享同一个文件表项，具体可以查看APUE文档说明。在实际应用项目中，主要是用于标准输出重定向。比如项目中有许多标准输出调试函数（默认启动一个进程时，操作系统默认分配了文件描述符0,1,2给该进程）。有时候需要将这些调试函数输出信息写入到文本文件中去，如何能一次复用现有调试函数而不是推倒重写，那最简单的就是将这些标准输出信息重定向到指定的文本文件中。那就需要用到这2个函数了。    需要注意的是，用这两个函数重定向标准输出时，一定是配合起来用的。由于dup2使用时会关闭filedes2，这里一般指的是标准输出（文件描述符为STDOUT_FILENO，值为1）。需要先用dup函数将其文件描述符保存起来，便于后面重新恢复打印到标准输出中来。另外还有一点就是，如果原有项目中用的是带I/O缓冲函数，即C语言标准库函数，如fprintf, fread,fwrite,printf等等，需要及时用fflush函数刷新到磁盘文件中去，不然很可能还会显示到标准输出中。实际项目中可以用2个函数封装好之后，注入到现有函数的最前面和结尾，一个函数用于将标准输出重定向到文件，另一个函数用于恢复标准输出。下面是演示代码：</p>
 <pre><code>/*
  * =====================================================================================
  *
@@ -245,10 +244,30 @@ int main()
 
 
     return 0;
-}</code></pre><p>
-另外还说明一点，复制一个描述符另一种方法就是使用fcntl函数，不过与dup系列函数不同的是，dup2函数是原子操作，而fcntl相当于先关闭文件，然后再复制文件描述符。    
+}
+</code></pre><p><p><br>另外还说明一点，复制一个描述符另一种方法就是使用fcntl函数，不过与dup系列函数不同的是，dup2函数是原子操作，而fcntl相当于先关闭文件，然后再复制文件描述符。    </p>
 
     </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wepay.png"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏就是我更新的动力
+    </p>
+</div>
     
     <div class="post-footer">
         <div>
@@ -278,34 +297,6 @@ int main()
             FSM有限状态机在工程中的运用</span><i class="fa fa-angle-right fa-fw"></i>
     </a>
     
-</div>
-
-<div id="comments">
-    
-
-<div id="vcomments" class="valine"></div>
-
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="/assets/valine.min.js"></script>
-
-<script>
-new Valine({
-    av: AV,
-    el: '#vcomments',
-    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
-    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
-    placeholder: '说点什么吧',
-    notify: false,
-    verify: true,
-    avatar: 'mm',
-    meta: 'nick,mail'.split(','),
-    pageSize: '10',
-    path: window.location.pathname,
-    lang: 'zh-CN'.toLowerCase()
-})
-</script>
-
-
 </div>
 
                 </main>
@@ -354,5 +345,20 @@ new Valine({
 
 <script src="/js/app.js?rev=@@hash.js"></script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>

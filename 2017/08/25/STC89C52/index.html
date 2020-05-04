@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 
 <head>
-    <!--Setting-->
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--Setting-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -63,7 +63,7 @@
 
     
 
-<meta name="generator" content="Hexo 4.2.0"></head>
+<meta name="generator" content="Hexo 4.2.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <!--[if lte IE 8]>
 <style>
     html{ font-size: 1em }
@@ -73,7 +73,7 @@
 <div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
 <![endif]-->
 <body>
-    <header class="main-header"  style="background-image:url(
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="main-header"  style="background-image:url(
     /./img/banner.jpg)"
      >
     <div class="main-header-box">
@@ -173,7 +173,7 @@
         
         <p class="fa fa-exclamation-triangle warning">
             本文于<strong>
-                982</strong>
+                983</strong>
             天之前发表，文中内容可能已经过时。
         </p>
         
@@ -223,7 +223,7 @@ void Uart232SendMsg(char *msg)
         Uart232SendByte(msg[index]);
     }
 
-    Uart232SendByte(&apos;\n&apos;);
+    Uart232SendByte(&#39;\n&#39;);
 }
 
 typedef void(*UART_FUNC)(char *para1, char *para2) __reentrant;
@@ -269,12 +269,12 @@ void addProc(const char *para1, const char *para2) __reentrant
 
     for (index = 0; index &lt; length1 &amp;&amp; index &lt; DIGIT_MAXSIZE; index++)
     {
-        a[index] = para1[length1 - 1 - index] - &apos;0&apos;;
+        a[index] = para1[length1 - 1 - index] - &#39;0&#39;;
     }
 
     for (index = 0; index &lt; length2 &amp;&amp; index &lt; DIGIT_MAXSIZE; index++)
     {
-        b[index] = para2[length2 - 1 - index] - &apos;0&apos;;
+        b[index] = para2[length2 - 1 - index] - &#39;0&#39;;
     }
 
     for (index = 0; index &lt; DIGIT_MAXSIZE; index++)
@@ -298,12 +298,12 @@ void addProc(const char *para1, const char *para2) __reentrant
 
     if ((index &amp; 0x80) == 0x80) //index可能为负数,先排除掉
     {
-        offset += sprintf(buffer + offset, &quot;%c&quot;, &apos;0&apos;);
+        offset += sprintf(buffer + offset, &quot;%c&quot;, &#39;0&#39;);
     }
 
     while ((index &amp; 0x80) != 0x80)
     {
-       offset += sprintf(buffer + offset, &quot;%c&quot;, a[index] + &apos;0&apos;);
+       offset += sprintf(buffer + offset, &quot;%c&quot;, a[index] + &#39;0&#39;);
        index--;
     }
     Uart232SendMsg(buffer);
@@ -453,7 +453,7 @@ void Usart() __interrupt 4
     {
         RI = 0;//清除接收中断标志位
         temp = SBUF;//接收到的数据
-        if (temp == &apos;\r&apos; || temp == &apos;\n&apos;)
+        if (temp == &#39;\r&#39; || temp == &#39;\n&#39;)
         {
             g_ucValidFlag = 1;
             g_ucPos = 0; //清除位置
@@ -499,15 +499,30 @@ void main()
             g_ucValidFlag = 0; //表示可以处理了
         }
     }
-}</code></pre><p>
-由于我本人主要在linux上编程学习，这里我选用的是SDCC编译器，语法上与keil有少许差异。用SDCC加上CodeBlocks集成开发环境简直是完美，Codeblocks IDE本身也是支持创建MCS8051工程的。唯一遗憾的是将程序烧录到开发板中目前没有太好的方法(我用的是STC89C52芯片)，这里我还是用另外一台windows电脑烧录的，用winscp工具将生成好的hex程序从linux拷贝到windows上进行烧录的。下面放几张图片：
-![配置codeblocks环境](http://sunjunior.cn/img/codeblocks.gif)
-![串口模式下调试单片机](http://sunjunior.cn/img/uart232.gif)
-![windows环境下烧录固件进入设备](http://sunjunior.cn/img/stcflash.jpg)
-![51单片机开发板](http://sunjunior.cn/img/stc89c52.jpg)
-
+}
+</code></pre><p><p><br>由于我本人主要在linux上编程学习，这里我选用的是SDCC编译器，语法上与keil有少许差异。用SDCC加上CodeBlocks集成开发环境简直是完美，Codeblocks IDE本身也是支持创建MCS8051工程的。唯一遗憾的是将程序烧录到开发板中目前没有太好的方法(我用的是STC89C52芯片)，这里我还是用另外一台windows电脑烧录的，用winscp工具将生成好的hex程序从linux拷贝到windows上进行烧录的。下面放几张图片：<br><img src="/img/codeblocks.gif" alt="配置codeblocks环境"><br><img src="/img/uart232.gif" alt="串口模式下调试单片机"><br><img src="/img/stcflash.jpg" alt="windows环境下烧录固件进入设备"><br><img src="/img/stc89c52.jpg" alt="51单片机开发板"></p>
 
     </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wepay.png"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赞赏就是我更新的动力
+    </p>
+</div>
     
     <div class="post-footer">
         <div>
@@ -531,34 +546,6 @@ void main()
     </a>
     
     
-</div>
-
-<div id="comments">
-    
-
-<div id="vcomments" class="valine"></div>
-
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src="/assets/valine.min.js"></script>
-
-<script>
-new Valine({
-    av: AV,
-    el: '#vcomments',
-    appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
-    appKey: 'erIpQac4azoCmgfBB7Dl9maa',
-    placeholder: '说点什么吧',
-    notify: false,
-    verify: true,
-    avatar: 'mm',
-    meta: 'nick,mail'.split(','),
-    pageSize: '10',
-    path: window.location.pathname,
-    lang: 'zh-CN'.toLowerCase()
-})
-</script>
-
-
 </div>
 
                 </main>
@@ -607,5 +594,20 @@ new Valine({
 
 <script src="/js/app.js?rev=@@hash.js"></script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>
