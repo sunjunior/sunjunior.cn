@@ -673,7 +673,7 @@ pre {
   padding: 0;
 }
 .post-content code {
-  color: #808080;
+  color: #07f904;
   font-size: 0.96em;
   background-color: #f9f9f9;
   padding: 1px 2px;
@@ -1344,7 +1344,7 @@ pre,
   overflow: auto;
   margin: 20px 0;
   padding: 0;
-  color: #c5c8c6;
+  color: #05ff19;
   font-size: 13px;
   background: #1d1f21;
   line-height: 1.6;
@@ -1362,7 +1362,7 @@ code {
 }
 pre code {
   padding: 0;
-  color: #c5c8c6;
+  color: #05ff19;
   background: none;
   text-shadow: none;
 }
@@ -1393,16 +1393,16 @@ pre .comment {
 }
 .highlight figcaption {
   font-size: 1em;
-  color: #c5c8c6;
+  color: #05ff19;
   line-height: 1em;
   margin-bottom: 1em;
 }
 .highlight figcaption a {
   float: right;
-  color: #c5c8c6;
+  color: #05ff19;
 }
 .highlight figcaption a:hover {
-  border-bottom-color: #c5c8c6;
+  border-bottom-color: #05ff19;
 }
 .highlight .gutter pre {
   padding-left: 10px;
