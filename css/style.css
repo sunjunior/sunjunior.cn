@@ -673,8 +673,9 @@ pre {
   padding: 0;
 }
 .post-content code {
-  color: #07f904;
-  font-size: 0.96em;
+  color: #0a0a0a;
+  font-size: 0.98em;
+  font-weight: bold;
   background-color: #f9f9f9;
   padding: 1px 2px;
   border: 1px solid #dadada;
@@ -703,18 +704,20 @@ pre {
   padding-left: 10px;
   overflow: auto;
   line-height: 1.5;
+  font-size: 0.98em;
+  font-weight: bold;
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-  color: #808080;
-  background-color: #f9f9f9;
+  color: #05f745;
+  background-color: #0a0a0a;
 }
 .post-content pre code {
-  color: #808080;
+  color: #17f90a;
   border: none;
   background: none;
   padding: 0;
 }
 .post-content pre tt {
-  color: #808080;
+  color: #17f90a;
   border: none;
   background: none;
   padding: 0;
@@ -1344,7 +1347,7 @@ pre,
   overflow: auto;
   margin: 20px 0;
   padding: 0;
-  color: #05ff19;
+  color: #808080;
   font-size: 13px;
   background: #1d1f21;
   line-height: 1.6;
@@ -1362,7 +1365,7 @@ code {
 }
 pre code {
   padding: 0;
-  color: #05ff19;
+  color: #808080;
   background: none;
   text-shadow: none;
 }
@@ -1393,16 +1396,16 @@ pre .comment {
 }
 .highlight figcaption {
   font-size: 1em;
-  color: #05ff19;
+  color: #808080;
   line-height: 1em;
   margin-bottom: 1em;
 }
 .highlight figcaption a {
   float: right;
-  color: #05ff19;
+  color: #808080;
 }
 .highlight figcaption a:hover {
-  border-bottom-color: #05ff19;
+  border-bottom-color: #808080;
 }
 .highlight .gutter pre {
   padding-left: 10px;
