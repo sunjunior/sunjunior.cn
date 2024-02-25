@@ -1,0 +1,360 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="sunjunior的个人技术博客">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="theme-version" content="1.2.3">
+    <meta name="root" content="/">
+    <link rel="dns-prefetch" href="http://sunjunior.cn">
+    <!--SEO-->
+
+<meta name="keywords" content="APUE学习笔记" />
+
+
+<meta name="description" content="dup函数是用来复制一个现有的文件描述符，UNIX-LIKE系统下提供了2个这样函数，原型如下(由unistd.h头文件提供)：
+int dup(int filedes);
+int dup2(i..." />
+
+
+<meta name="robots" content="all" />
+<meta name="google" content="all" />
+<meta name="googlebot" content="all" />
+<meta name="verify" content="all" />
+    <!--Title-->
+
+<title>
+    
+    DUP函数的使用场景 |
+    
+    sunjunior的个人技术博客
+</title>
+
+<link rel="alternate" href="/atom.xml" title="sunjunior的个人技术博客" type="application/atom+xml">
+
+
+<link rel="icon" href="/favicon.ico">
+
+    
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7.css">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.7.0.css">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash.css">
+
+    
+<div class="hide">
+    <script type="text/javascript">
+    var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+</div>
+
+
+
+
+    
+
+<meta name="generator" content="Hexo 4.2.1"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+<body>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="main-header"  style="background-image:url(
+    /./img/banner.jpg)"
+     >
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title='sunjunior'>
+            <img src="/img/avatar.png" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+            <!--<h2 class="text-hide">技术控，爱折腾</h2>-->
+            
+            <h2>
+                技术控，爱折腾
+            </h2>
+            
+        </div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://sunjunior.cn">
+                        sunjunior的个人技术博客</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/"><i class="fa "></i>
+                                首页</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/archives"><i class="fa "></i>
+                                归档</a>
+                        </li>
+                        
+                        <li role="presentation" class="text-center">
+                            <a href="/about"><i class="fa "></i>
+                                关于</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="DUP函数的使用场景">
+            
+            DUP函数的使用场景
+            
+        </h1>
+        <div class="post-meta">
+    
+    <span class="categories-meta fa-wrap">
+        <i class="fa fa-folder-open-o"></i>
+        
+    </span>
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-tags"></i>
+        <span class="tags-meta">
+            
+            <a class="tag-link" href="/tags/APUE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag">APUE学习笔记</a>
+            
+        </span>
+    </span>
+    
+    
+    
+    <span class="fa-wrap">
+        <i class="fa fa-clock-o"></i>
+        <span class="date-meta">
+            2017/09/01</span>
+    </span>
+    
+    
+</div>
+        
+        
+        <p class="fa fa-exclamation-triangle warning">
+            本文于<strong>
+                2368</strong>
+            天之前发表，文中内容可能已经过时。
+        </p>
+        
+    </div>
+    
+    <div class="post-body post-content">
+        <p>dup函数是用来复制一个现有的文件描述符，UNIX-LIKE系统下提供了2个这样函数，原型如下(由unistd.h头文件提供)：</p>
+<pre><code>int dup(int filedes);
+int dup2(int filedes, int filedes2);
+</code></pre><p><p><br>根据APUE书中所讲，dup返回的新文件描述符是可用文件描述符中的最小数值，而dup2可用用filedes2参数指定新描述符的数值。如果filedes2已经打开，则将其关闭。这些函数返回的新文件描述符与被复制的filedes共享同一个文件表项，具体可以查看APUE文档说明。在实际应用项目中，主要是用于标准输出重定向。比如项目中有许多标准输出调试函数（默认启动一个进程时，操作系统默认分配了文件描述符0,1,2给该进程）。有时候需要将这些调试函数输出信息写入到文本文件中去，如何能一次复用现有调试函数而不是推倒重写，那最简单的就是将这些标准输出信息重定向到指定的文本文件中。那就需要用到这2个函数了。    需要注意的是，用这两个函数重定向标准输出时，一定是配合起来用的。由于dup2使用时会关闭filedes2，这里一般指的是标准输出（文件描述符为STDOUT_FILENO，值为1）。需要先用dup函数将其文件描述符保存起来，便于后面重新恢复打印到标准输出中来。另外还有一点就是，如果原有项目中用的是带I/O缓冲函数，即C语言标准库函数，如fprintf, fread,fwrite,printf等等，需要及时用fflush函数刷新到磁盘文件中去，不然很可能还会显示到标准输出中。实际项目中可以用2个函数封装好之后，注入到现有函数的最前面和结尾，一个函数用于将标准输出重定向到文件，另一个函数用于恢复标准输出。下面是演示代码：</p>
+<pre><code>/*
+ * =====================================================================================
+ *
+ *       Filename:  dup.c
+ *
+ *    Description:  复制一个文件描述符，用于标准输出重定向
+ *
+ *        Version:  1.0
+ *        Created:  2017年08月30日 20时03分45秒
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  St.John
+ *   Organization:  
+ *
+ * =====================================================================================
+ */
+#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;fcntl.h&gt;
+
+int main()
+{
+    int newfd;
+    int oldfd;
+    oldfd = dup(STDOUT_FILENO); /* 把标准输出文件描述符先保存起来 */
+    if (oldfd &lt; 0)
+    {
+        perror(&quot;creat error&quot;);
+        exit(0);
+    }
+    newfd = open(&quot;test.txt&quot;, O_RDWR | O_CREAT | O_TRUNC);
+    if (newfd == -1)
+    {
+        perror(&quot;open failed&quot;);
+        exit(0);
+    }
+
+    if (dup2(newfd, STDOUT_FILENO) &lt; 0) //这里文件描述符STDOUT_FILENO会关闭，所以先用dup保存起来，便于后面恢复标准输出
+    {
+        perror(&quot;dup2 error&quot;);
+        exit(0);
+    }
+    printf(&quot;TEXT I am going to sleep now\n&quot;);
+    fflush(stdout); //这里需要强制刷新IO缓存，否则可能还会显示到标准输出
+
+    if (dup2(oldfd, STDOUT_FILENO) &lt; 0) 
+    {
+        perror(&quot;can not dup to stdout&quot;);
+        exit(0);
+    }
+
+    printf(&quot;Now show on stdout\n&quot;) ; //将标准输出重定向到txt文件中
+
+
+    return 0;
+}
+</code></pre><p><p><br>另外还说明一点，复制一个描述符另一种方法就是使用fcntl函数，不过与dup系列函数不同的是，dup2函数是原子操作，而fcntl相当于先关闭文件，然后再复制文件描述符。    </p>
+
+    </div>
+    
+    <div class="reward" ontouchstart>
+    <div class="reward-wrap">赏
+        <div class="reward-box">
+            
+            <span class="reward-type">
+                <img class="alipay" src="/img/alipay.jpg"><b>支付宝打赏</b>
+            </span>
+            
+            
+            <span class="reward-type">
+                <img class="wechat" src="/img/wepay.png"><b>微信打赏</b>
+            </span>
+            
+        </div>
+    </div>
+    <p class="reward-tip">
+        赠人玫瑰，手留余香
+    </p>
+</div>
+    
+    <div class="post-footer">
+        <div>
+            
+            转载声明：
+            商业转载请联系作者获得授权,非商业转载请注明出处 ©
+            
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+<div class="article-nav prev-next-wrap clearfix">
+    
+    <a href="/2017/12/30/%E5%AE%89%E5%8D%93%E6%89%8B%E6%9C%BA%E5%AE%89%E8%A3%85Archlinux%E7%B3%BB%E7%BB%9F%E6%90%AD%E5%BB%BAweb%E6%9C%8D%E5%8A%A1/" class="pre-post btn btn-default" title='安卓手机安装Archlinux系统搭建web服务'>
+        <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+        <span class="hidden-xs">
+            安卓手机安装Archlinux系统搭建web服务</span>
+    </a>
+    
+    
+    <a href="/2017/08/26/FSM%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA%E5%9C%A8%E5%B7%A5%E7%A8%8B%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E8%BF%90%E7%94%A8/" class="next-post btn btn-default" title='FSM有限状态机在工程中的运用'>
+        <span class="hidden-lg">下一篇</span>
+        <span class="hidden-xs">
+            FSM有限状态机在工程中的运用</span><i class="fa fa-angle-right fa-fw"></i>
+    </a>
+    
+</div>
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">
+            文章目录
+        </h3>
+        
+        <p>暂无目录</p>
+        
+    </div>
+</aside>
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+<a id="back-to-top" class="icon-btn hide">
+    <i class="fa fa-chevron-up"></i>
+</a>
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright©2017-2024 ALL RIGHTS RESERVED.
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="/js/app.js?rev=@@hash.js"></script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
